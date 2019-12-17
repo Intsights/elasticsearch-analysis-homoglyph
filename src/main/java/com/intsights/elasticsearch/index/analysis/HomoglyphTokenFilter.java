@@ -196,52 +196,54 @@ public class HomoglyphTokenFilter extends TokenFilter {
 
     @Override
     public boolean incrementToken() throws IOException {
-        if (results == null) {
-            if (input.incrementToken()) {
-                char[] termBuffer = termAtt.buffer();
-                int termLength = termAtt.length();
+        while (true) {
+            if (results == null) {
+                if (input.incrementToken()) {
+                    char[] termBuffer = termAtt.buffer();
+                    int termLength = termAtt.length();
 
-                String[][] asciiGroups = new String[termLength][];
+                    String[][] asciiGroups = new String[termLength][];
 
-                int asciiGroupsIndex = 0;
-                boolean isHomoglyph = false;
-                for (int i = 0; i < termLength; i++) {
-                    int codePoint;
-                    if (isHighSurrogate(termBuffer[i]) && i < termLength - 1 && isLowSurrogate(termBuffer[i + 1])) {
-                        codePoint = getUtf16CodePoint(termBuffer[i], termBuffer[i + 1]);
-                        i++;
-                    } else {
-                        codePoint = termBuffer[i];
+                    int asciiGroupsIndex = 0;
+                    boolean isHomoglyph = false;
+                    for (int i = 0; i < termLength; i++) {
+                        int codePoint;
+                        if (isHighSurrogate(termBuffer[i]) && i < termLength - 1 && isLowSurrogate(termBuffer[i + 1])) {
+                            codePoint = getUtf16CodePoint(termBuffer[i], termBuffer[i + 1]);
+                            i++;
+                        } else {
+                            codePoint = termBuffer[i];
+                        }
+
+                        String[] asciiGroup = unicodeToAscii.get(codePoint);
+                        if (asciiGroup == null) {
+                            asciiGroup = new String[]{String.valueOf(termBuffer[i])};
+                        } else {
+                            isHomoglyph = true;
+                        }
+                        asciiGroups[asciiGroupsIndex++] = asciiGroup;
                     }
 
-                    String[] asciiGroup = unicodeToAscii.get(codePoint);
-                    if (asciiGroup == null) {
-                        asciiGroup = new String[]{String.valueOf(termBuffer[i])};
-                    } else {
-                        isHomoglyph = true;
+                    if (!isHomoglyph) {
+                        continue;
                     }
-                    asciiGroups[asciiGroupsIndex++] = asciiGroup;
-                }
 
-                if (!isHomoglyph) {
+                    results = getResults(asciiGroups, asciiGroupsIndex - 1);
+                    resultsPointer = 0;
+
+                } else {
                     return false;
                 }
-
-                results = getResults(asciiGroups, asciiGroupsIndex - 1);
-                resultsPointer = 0;
-
-            } else {
-                return false;
             }
+
+            termAtt.setEmpty().append(results[resultsPointer++]);
+
+            if (resultsPointer == results.length) {
+                results = null;
+            }
+
+            return true;
         }
-
-        termAtt.setEmpty().append(results[resultsPointer++]);
-
-        if (resultsPointer == results.length) {
-            results = null;
-        }
-
-        return true;
     }
 
     private String[] getResults(String[][] asciiGroups, int asciiGroupsIndex) {
