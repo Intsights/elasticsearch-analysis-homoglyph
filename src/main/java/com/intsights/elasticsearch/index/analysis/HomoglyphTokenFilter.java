@@ -8,7 +8,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.io.IOException;
 
-public class HomoglyphTokenFilter extends TokenFilter {
+public final class HomoglyphTokenFilter extends TokenFilter {
     private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
     private Map<String, int[]> asciiToUnicode;
     private Map<Integer, String[]> unicodeToAscii;
