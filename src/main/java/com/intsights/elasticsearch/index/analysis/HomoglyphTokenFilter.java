@@ -234,6 +234,8 @@ public final class HomoglyphTokenFilter extends TokenFilter {
                 } else {
                     return false;
                 }
+            } else {
+                clearAttributes();
             }
 
             termAtt.setEmpty().append(results[resultsPointer++]);
