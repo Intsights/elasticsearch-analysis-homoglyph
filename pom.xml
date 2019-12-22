@@ -7,16 +7,23 @@
 	<packaging>jar</packaging>
 	<properties>
 	    <elasticsearch.version>7.3.1</elasticsearch.version>
+		<lucene.version>8.1.0</lucene.version>
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 	<dependencies>
 	    <dependency>
-		<groupId>org.elasticsearch</groupId>
-		<artifactId>elasticsearch</artifactId>
-		<version>${elasticsearch.version}</version>
-		<scope>compile</scope>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>${elasticsearch.version}</version>
+			<scope>compile</scope>
 	    </dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-test-framework</artifactId>
+			<version>${lucene.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 	    <plugins>
