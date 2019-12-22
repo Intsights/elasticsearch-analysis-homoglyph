@@ -208,8 +208,8 @@ public final class HomoglyphTokenFilter extends TokenFilter {
                     boolean isHomoglyph = false;
                     for (int i = 0; i < termLength; i++) {
                         int codePoint;
-                        if (isHighSurrogate(termBuffer[i]) && i < termLength - 1 && isLowSurrogate(termBuffer[i + 1])) {
-                            codePoint = getUtf16CodePoint(termBuffer[i], termBuffer[i + 1]);
+                        if (Character.isHighSurrogate(termBuffer[i]) && i < termLength - 1 && Character.isLowSurrogate(termBuffer[i + 1])) {
+                            codePoint = Character.toCodePoint(termBuffer[i], termBuffer[i + 1]);
                             i++;
                         } else {
                             codePoint = termBuffer[i];
@@ -264,21 +264,5 @@ public final class HomoglyphTokenFilter extends TokenFilter {
         }
 
         return results;
-    }
-
-    private static boolean isHighSurrogate(char ch) {
-        return ch >= '\ud800' && ch <= '\udbff';
-    }
-
-    private static boolean isLowSurrogate(char ch) {
-        return ch >= '\udc00' && ch <= '\udfff';
-    }
-
-    private static int getUtf16CodePoint(char highSurrogate, char lowSurrogate) {
-        int intHighSurrogate = highSurrogate;
-        int intLowSurrogate = lowSurrogate;
-
-        int codePoint = ((intHighSurrogate - 0xd800) << 10) + (intLowSurrogate - 0xdc00) + 0x10000;
-        return codePoint;
     }
 }
