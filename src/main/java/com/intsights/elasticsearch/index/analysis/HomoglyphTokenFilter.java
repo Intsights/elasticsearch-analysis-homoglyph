@@ -3,6 +3,7 @@ package com.intsights.elasticsearch.index.analysis;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -10,6 +11,8 @@ import java.io.IOException;
 
 public final class HomoglyphTokenFilter extends TokenFilter {
     private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
+    private final PositionIncrementAttribute posIncrAtt = addAttribute(PositionIncrementAttribute.class);
+
     private Map<String, int[]> asciiToUnicode;
     private Map<Integer, String[]> unicodeToAscii;
     private String[] results = null;
@@ -236,6 +239,7 @@ public final class HomoglyphTokenFilter extends TokenFilter {
                 }
             } else {
                 clearAttributes();
+                posIncrAtt.setPositionIncrement(0);
             }
 
             termAtt.setEmpty().append(results[resultsPointer++]);

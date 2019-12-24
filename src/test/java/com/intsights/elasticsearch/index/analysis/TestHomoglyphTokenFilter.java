@@ -69,7 +69,7 @@ public class TestHomoglyphTokenFilter extends BaseTokenStreamTestCase {
         HomoglyphTokenFilter filter = new HomoglyphTokenFilter(stream);
         assertTokenStreamContents(filter, new String[] {
             "one", "three", "four", "f0ur", "five", "six"
-        });
+        }, new int[] {1, 1, 1, 0, 1, 1});
     }
 
     public void testUnicodeEdgeCases() throws Exception {
