@@ -35,7 +35,7 @@ public class TestHomoglyphTokenFilter extends BaseTokenStreamTestCase {
     public void testNoHomoglyphs() throws Exception {
         TokenStream stream = whitespaceMockTokenizer("test");
         HomoglyphTokenFilter filter = new HomoglyphTokenFilter(stream);
-        assertTokenStreamContents(filter, new String[0]);
+        assertTokenStreamContents(filter, new String[] {"test"});
     }
 
     public void testMultipleMappingHomoglyphs() throws Exception {
@@ -68,8 +68,8 @@ public class TestHomoglyphTokenFilter extends BaseTokenStreamTestCase {
         TokenStream stream = whitespaceMockTokenizer("onℯ two 𝒕hree fОur FIVE sⅸ");
         HomoglyphTokenFilter filter = new HomoglyphTokenFilter(stream);
         assertTokenStreamContents(filter, new String[] {
-            "one", "three", "four", "f0ur", "five", "six"
-        }, new int[] {1, 1, 1, 0, 1, 1});
+            "one", "two", "three", "four", "f0ur", "five", "six"
+        }, new int[] {1, 1, 1, 1, 0, 1, 1});
     }
 
     public void testUnicodeEdgeCases() throws Exception {

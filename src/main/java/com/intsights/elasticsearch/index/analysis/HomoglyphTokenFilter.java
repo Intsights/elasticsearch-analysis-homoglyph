@@ -199,57 +199,55 @@ public final class HomoglyphTokenFilter extends TokenFilter {
 
     @Override
     public boolean incrementToken() throws IOException {
-        while (true) {
-            if (results == null) {
-                if (input.incrementToken()) {
-                    char[] termBuffer = termAtt.buffer();
-                    int termLength = termAtt.length();
+        if (results == null) {
+            if (input.incrementToken()) {
+                char[] termBuffer = termAtt.buffer();
+                int termLength = termAtt.length();
 
-                    String[][] asciiGroups = new String[termLength][];
+                String[][] asciiGroups = new String[termLength][];
 
-                    int asciiGroupsIndex = 0;
-                    boolean isHomoglyph = false;
-                    for (int i = 0; i < termLength; i++) {
-                        int codePoint;
-                        if (Character.isHighSurrogate(termBuffer[i]) && i < termLength - 1 && Character.isLowSurrogate(termBuffer[i + 1])) {
-                            codePoint = Character.toCodePoint(termBuffer[i], termBuffer[i + 1]);
-                            i++;
-                        } else {
-                            codePoint = termBuffer[i];
-                        }
-
-                        String[] asciiGroup = unicodeToAscii.get(codePoint);
-                        if (asciiGroup == null) {
-                            asciiGroup = new String[]{String.valueOf(termBuffer[i])};
-                        } else {
-                            isHomoglyph = true;
-                        }
-                        asciiGroups[asciiGroupsIndex++] = asciiGroup;
+                int asciiGroupsIndex = 0;
+                boolean isHomoglyph = false;
+                for (int i = 0; i < termLength; i++) {
+                    int codePoint;
+                    if (Character.isHighSurrogate(termBuffer[i]) && i < termLength - 1 && Character.isLowSurrogate(termBuffer[i + 1])) {
+                        codePoint = Character.toCodePoint(termBuffer[i], termBuffer[i + 1]);
+                        i++;
+                    } else {
+                        codePoint = termBuffer[i];
                     }
 
-                    if (!isHomoglyph) {
-                        continue;
+                    String[] asciiGroup = unicodeToAscii.get(codePoint);
+                    if (asciiGroup == null) {
+                        asciiGroup = new String[]{String.valueOf(termBuffer[i])};
+                    } else {
+                        isHomoglyph = true;
                     }
-
-                    results = getResults(asciiGroups, asciiGroupsIndex - 1);
-                    resultsPointer = 0;
-
-                } else {
-                    return false;
+                    asciiGroups[asciiGroupsIndex++] = asciiGroup;
                 }
+
+                if (!isHomoglyph) {
+                    return true;
+                }
+
+                results = getResults(asciiGroups, asciiGroupsIndex - 1);
+                resultsPointer = 0;
+
             } else {
-                clearAttributes();
-                posIncrAtt.setPositionIncrement(0);
+                return false;
             }
-
-            termAtt.setEmpty().append(results[resultsPointer++]);
-
-            if (resultsPointer == results.length) {
-                results = null;
-            }
-
-            return true;
+        } else {
+            clearAttributes();
+            posIncrAtt.setPositionIncrement(0);
         }
+
+        termAtt.setEmpty().append(results[resultsPointer++]);
+
+        if (resultsPointer == results.length) {
+            results = null;
+        }
+
+        return true;
     }
 
     private String[] getResults(String[][] asciiGroups, int asciiGroupsIndex) {
