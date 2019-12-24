@@ -4,6 +4,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
+import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -12,9 +13,13 @@ import java.io.IOException;
 public final class HomoglyphTokenFilter extends TokenFilter {
     private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
     private final PositionIncrementAttribute posIncrAtt = addAttribute(PositionIncrementAttribute.class);
+    private final TypeAttribute typeAtt = addAttribute(TypeAttribute.class);
 
     private Map<String, int[]> asciiToUnicode;
     private Map<Integer, String[]> unicodeToAscii;
+
+    private String currentType;
+
     private String[] results = null;
     private int resultsPointer = 0;
 
@@ -204,6 +209,8 @@ public final class HomoglyphTokenFilter extends TokenFilter {
                 char[] termBuffer = termAtt.buffer();
                 int termLength = termAtt.length();
 
+                currentType = typeAtt.type();
+
                 String[][] asciiGroups = new String[termLength][];
 
                 int asciiGroupsIndex = 0;
@@ -239,6 +246,7 @@ public final class HomoglyphTokenFilter extends TokenFilter {
         } else {
             clearAttributes();
             posIncrAtt.setPositionIncrement(0);
+            typeAtt.setType(currentType);
         }
 
         termAtt.setEmpty().append(results[resultsPointer++]);
