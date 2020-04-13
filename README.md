@@ -41,7 +41,7 @@ For the plugin to start working you need to restart the node.
 You can create a Docker container with the plugin installed. 
 Save the following in a Dockerfile:
 ```
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.3.1
+FROM docker.elastic.co/elasticsearch/elasticsearch:7.6.2
 
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install https://github.com/intsights/elasticsearch-analysis-homoglyph/releases/download/v0.2.1/analysis-homoglyph-0.2.1.zip
 ```
