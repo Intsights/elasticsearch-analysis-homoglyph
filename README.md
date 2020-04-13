@@ -19,6 +19,7 @@ The token 'heｌｌo' will be replaced with the following tokens:
 ### Elasticsearch version compatibility
 | Plugin version   | Elasticsearch version |
 |------------------|-----------------------|
+| 0.2.1            | 7.6.2                 |
 | 0.2.0            | 7.3.1                 |
 | 0.1.1            | 7.3.1                 |
 | 0.1.0            | 7.3.1                 |
@@ -26,7 +27,7 @@ The token 'heｌｌo' will be replaced with the following tokens:
 ## Installation
 To install the plugin on an Elasticsearch node make sure you are in the Elasticsearch directory and then run:
 ```
-bin/elasticsearch-plugin install https://github.com/intsights/elasticsearch-analysis-homoglyph/releases/download/v0.2.0/analysis-homoglyph-0.2.0.zip
+bin/elasticsearch-plugin install https://github.com/intsights/elasticsearch-analysis-homoglyph/releases/download/v0.2.1/analysis-homoglyph-0.2.1.zip
 ```
 
 You can verify the plugin has been installed by running:
@@ -42,12 +43,12 @@ Save the following in a Dockerfile:
 ```
 FROM docker.elastic.co/elasticsearch/elasticsearch:7.3.1
 
-RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install https://github.com/intsights/elasticsearch-analysis-homoglyph/releases/download/v0.2.0/analysis-homoglyph-0.2.0.zip
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install https://github.com/intsights/elasticsearch-analysis-homoglyph/releases/download/v0.2.1/analysis-homoglyph-0.2.1.zip
 ```
 Then run:
 ```
-docker build -f /path/to/Dockerfile -t elaticsearch-with-homoglyph-plugin:0.2.0 .
-docker run -p 9200:9200  -p 9300:9300  -e "discovery.type=single-node" elaticsearch-with-homoglyph-plugin:0.2.0
+docker build -f /path/to/Dockerfile -t elaticsearch-with-homoglyph-plugin:0.2.1 .
+docker run -p 9200:9200  -p 9300:9300  -e "discovery.type=single-node" elaticsearch-with-homoglyph-plugin:0.2.1
 ```
 Depending on your system, you might need to run the Docker with `sudo`
 

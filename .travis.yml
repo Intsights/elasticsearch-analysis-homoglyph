@@ -4,7 +4,7 @@ deploy:
   api_key:
     secure: $GITHUB_API_KEY
   skip_cleanup: true
-  file: target/releases/analysis-homoglyph-0.2.0.zip
+  file: target/releases/analysis-homoglyph-0.2.1.zip
   on:
     tags: true
 script:
