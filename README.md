@@ -19,6 +19,7 @@ The token 'heｌｌo' will be replaced with the following tokens:
 ### Elasticsearch version compatibility
 | Plugin version   | Elasticsearch version |
 |------------------|-----------------------|
+| 8.x              | 8.x                   |
 | 7.17.3           | 7.17.3                |
 | 0.2.2            | 7.8.1                 |
 | 0.2.1            | 7.6.2                 |
