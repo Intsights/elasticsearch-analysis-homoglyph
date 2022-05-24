@@ -19,6 +19,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Create Release
+      id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -28,6 +29,7 @@ jobs:
         draft: false
         prerelease: false
     - name: Upload Release Asset
+      id: upload_release_asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
