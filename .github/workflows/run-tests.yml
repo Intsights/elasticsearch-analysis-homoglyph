@@ -1,0 +1,21 @@
+name: Maven Tests
+
+on:
+  push:
+    pull_requests:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+    - name: Test with Maven
+      run: mvn -B test --file pom.xml
