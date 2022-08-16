@@ -1,7 +1,7 @@
 name: Maven Tests
 
 on:
-  pull_requests:
+  pull_request:
   push:
     branches:
       - master
