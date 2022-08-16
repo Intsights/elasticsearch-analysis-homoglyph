@@ -81,4 +81,10 @@ public class TestHomoglyphTokenFilter extends BaseTokenStreamTestCase {
             "aa\ud802aae", "bb\udc02bbe", "ecc\ud803"
         });
     }
+
+    public void testIgnoreBecauseTooManyResults() throws Exception {
+        TokenStream stream = whitespaceMockTokenizer("ооооооооооооооооооооооооооооооооооо");
+        HomoglyphTokenFilter filter = new HomoglyphTokenFilter(stream);
+        assertTokenStreamContents(filter, new String[] {"ооооооооооооооооооооооооооооооооооо"});
+    }
 }
