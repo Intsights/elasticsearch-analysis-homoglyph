@@ -21,6 +21,8 @@ public final class HomoglyphTokenFilter extends TokenFilter {
     private String[] results = null;
     private int resultsPointer = 0;
 
+    private final int maxResultCount = 200;
+
     public HomoglyphTokenFilter(TokenStream input) {
         super(input);
 
@@ -213,6 +215,7 @@ public final class HomoglyphTokenFilter extends TokenFilter {
 
                 int asciiGroupsIndex = 0;
                 boolean isHomoglyph = false;
+                int resultCount = 1;
                 for (int i = 0; i < termLength; i++) {
                     int codePoint;
                     if (Character.isHighSurrogate(termBuffer[i]) && i < termLength - 1 && Character.isLowSurrogate(termBuffer[i + 1])) {
@@ -229,6 +232,13 @@ public final class HomoglyphTokenFilter extends TokenFilter {
                         isHomoglyph = true;
                     }
                     asciiGroups[asciiGroupsIndex++] = asciiGroup;
+
+                    int previousResultCount = resultCount;
+                    resultCount *= asciiGroup.length;
+                    boolean integerOverflowHappened = resultCount < previousResultCount;
+                    if (resultCount > maxResultCount || integerOverflowHappened) {
+                        return true;
+                    }
                 }
 
                 if (!isHomoglyph) {
