@@ -15,7 +15,7 @@ The token 'heｌｌo' will be replaced with the following tokens:
 ### Notes
 * The filter is not case sensitive, and the resulting tokens will be lowercase. Uppercase letters are mapped to their lowercase equivalents.
 * The original token is not preserved. If no character in the token has alphanumeric homoglyphs, the token is returned as is.
-* If the token can be translated to too many ascii tokens (more than 1000), it will produce no translations at all, and will just be returned as is. This is to protect from out-of-memory problems.
+* If the token can be translated to too many ascii tokens (more than 200), it will produce no translations at all, and will just be returned as is. This is to protect from out-of-memory problems.
 
 ### Elasticsearch version compatibility
 | Plugin version   | Elasticsearch version |

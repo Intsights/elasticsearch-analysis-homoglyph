@@ -21,7 +21,7 @@ public final class HomoglyphTokenFilter extends TokenFilter {
     private String[] results = null;
     private int resultsPointer = 0;
 
-    private final int maxResultCount = 1000;
+    private final int maxResultCount = 200;
 
     public HomoglyphTokenFilter(TokenStream input) {
         super(input);
