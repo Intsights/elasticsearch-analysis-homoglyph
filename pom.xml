@@ -6,7 +6,7 @@
 	<version>${elasticsearch.version}</version>
 	<packaging>jar</packaging>
 	<properties>
-	    <elasticsearch.version>8.3.3</elasticsearch.version>
+	    <elasticsearch.version>8.4.0</elasticsearch.version>
 		<lucene.version>9.2.0</lucene.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
