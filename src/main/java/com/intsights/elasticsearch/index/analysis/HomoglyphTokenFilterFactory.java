@@ -9,7 +9,7 @@ import org.elasticsearch.index.IndexSettings;
 public class HomoglyphTokenFilterFactory extends AbstractTokenFilterFactory {
 
     public HomoglyphTokenFilterFactory(IndexSettings indexSettings, Environment environment, String name, Settings settings) {
-        super(indexSettings, name, settings);
+        super(name, settings);
     }
 
     @Override
