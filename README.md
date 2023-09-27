@@ -29,7 +29,7 @@ The token 'heｌｌo' will be replaced with the following tokens:
 | 0.1.1            | 7.3.1                 |
 | 0.1.0            | 7.3.1                 |
 
-(version 8.8.0 is not available because of the absence of `elasticsearch-preallocate` 8.8.0, as seen [here](https://repo1.maven.org/maven2/org/elasticsearch/elasticsearch-preallocate/). I will add a 8.8.0 release if and when this problem will be fixed)
+(version 8.8.0 is not available because of the absence of `elasticsearch-preallocate` 8.8.0, as seen [here](https://repo1.maven.org/maven2/org/elasticsearch/elasticsearch-preallocate/). I will add an 8.8.0 release if and when this problem is fixed)
 
 ## Installation
 To install the plugin on an Elasticsearch node make sure you are in the Elasticsearch directory and then run:
