@@ -14,7 +14,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '19'
+        java-version: '20'
         distribution: 'temurin'
     - name: Build with Maven
       run: mvn -B package --file pom.xml
@@ -35,6 +35,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./target/releases/analysis-homoglyph-8.7.0.zip
-        asset_name: analysis-homoglyph-8.7.0.zip
+        asset_path: ./target/releases/analysis-homoglyph-8.7.1.zip
+        asset_name: analysis-homoglyph-8.7.1.zip
         asset_content_type: application/zip
