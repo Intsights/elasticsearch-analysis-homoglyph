@@ -8,6 +8,7 @@ inputs:
 outputs:
   commit-message:
     description: 'Commit message'
+    value: ${{ steps.commit_message.outputs.message }}
 runs:
   using: 'composite'
   steps:
@@ -25,4 +26,4 @@ runs:
           message="${message} (and java to ${{ inputs.java-version }})"
         fi
 
-        echo "commit-message=${message}" >> $GITHUB_OUTPUT
+        echo "message=${message}" >> $GITHUB_OUTPUT
