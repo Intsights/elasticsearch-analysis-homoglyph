@@ -11,14 +11,14 @@ jobs:
   create_tag:
     runs-on: ubuntu-latest
     steps:
-      - name: Get version from branch name
-        id: get_version
+      - name: Get tag name from branch name
+        id: get_tag_name
         if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'releases/') }}
         run: |
-          version=$(echo $${{ github.event.pull_request.head.ref }} | sed -r 's/releases\/release-(v.+)/\1/p')
-          echo "::set-output name=version::$version"
+          tag_name=$(echo $${{ github.event.pull_request.head.ref }} | sed -r 's/releases\/release-(v.+)/\1/p')
+          echo "::set-output name=tag_name::$tag_name"
       - name: Create tag
-        if: steps.get_version.outputs.version
+        if: steps.get_tag_name.outputs.tag_name
         uses: rickstaa/action-create-tag@v1
         with:
-          tag: ${{ steps.get_version.outputs.version }}
+          tag: ${{ steps.get_tag_name.outputs.tag_name }}

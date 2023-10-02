@@ -50,7 +50,6 @@ then
 
     # Updrage Elasticsearch version
     sed -r -i "s/<elasticsearch\.version>[0-9]+\.[0-9]+\.[0-9]+<\/elasticsearch\.version>/<elasticsearch.version>${elasticsearch_version}<\/elasticsearch.version>/" ./pom.xml
-    sed -r -i "s/analysis-homoglyph-[0-9]+\.[0-9]+\.[0-9]+(.[0-9]+)?\.zip/analysis-homoglyph-${elasticsearch_version}.zip/g" ./.github/workflows/create-release.yml
 
     if [ $lucene_version ]
     then

@@ -28,6 +28,11 @@ jobs:
         release_name: ${{ github.ref }}
         draft: false
         prerelease: false
+    - name: Get version from tag name
+      id: get_version
+      run: |
+        version=$(echo $${{ github.ref  }} | sed -r 's/v(.+)/\1/p')
+        echo "::set-output name=version::$version"
     - name: Upload Release Asset
       id: upload_release_asset
       uses: actions/upload-release-asset@v1
@@ -35,6 +40,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./target/releases/analysis-homoglyph-8.8.1.zip
-        asset_name: analysis-homoglyph-8.8.1.zip
+        asset_path: ./target/releases/analysis-homoglyph-${{ steps.get_version.outputs.version }}.zip
+        asset_name: analysis-homoglyph-${{ steps.get_version.outputs.version }}.zip
         asset_content_type: application/zip
