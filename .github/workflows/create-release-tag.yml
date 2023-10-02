@@ -17,7 +17,7 @@ jobs:
         id: get_tag_name
         if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'releases/') }}
         run: |
-          tag_name=$(echo $${{ github.event.pull_request.head.ref }} | sed -r 's/releases\/release-(v.+)/\1/p')
+          tag_name=$(echo ${{ github.event.pull_request.head.ref }} | sed -r 's/^releases\/release-(v.+)$g/\1/p')
           echo "tag_name=${tag_name}" >> $GITHUB_OUTPUT
       - name: Create tag
         if: steps.get_tag_name.outputs.tag_name
