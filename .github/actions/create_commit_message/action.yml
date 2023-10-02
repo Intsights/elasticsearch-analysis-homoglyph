@@ -3,8 +3,10 @@ inputs:
     description: 'Elasticsearch version'
   lucene-version:
     description: 'Lucene version'
+    default: ''
   java-version:
     description: 'Java version'
+    default: ''
 outputs:
   commit-message:
     description: 'Commit message'

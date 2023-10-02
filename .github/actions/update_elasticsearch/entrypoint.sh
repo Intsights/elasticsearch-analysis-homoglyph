@@ -45,19 +45,20 @@ then
     lucene_version=$(echo $release_notes_http | sed -nr "s/.*upgrade[a-z ]*lucene[a-z ]*([0-9]+\.[0-9]+\.[0-9]+).*/\1/pI")
     java_version=$(echo $release_notes_http | sed -nr "s/.*upgrade[a-z ]*JDK[a-z ]*([0-9]+).*/\1/pI")
 
+    echo "New Lucene version is ${lucene_version}"
+    echo "New Java version is ${java_version}"
+
     # Updrage Elasticsearch version
     sed -r -i "s/<elasticsearch\.version>[0-9]+\.[0-9]+\.[0-9]+<\/elasticsearch\.version>/<elasticsearch.version>${elasticsearch_version}<\/elasticsearch.version>/" ./pom.xml
     sed -r -i "s/analysis-homoglyph-[0-9]+\.[0-9]+\.[0-9]+(.[0-9]+)?\.zip/analysis-homoglyph-${elasticsearch_version}.zip/g" ./.github/workflows/create-release.yml
 
     if [ $lucene_version ]
     then
-        echo "New Lucene version is ${lucene_version}"
         sed -r -i "s/<lucene\.version>[0-9]+\.[0-9]+\.[0-9]+<\/lucene\.version>/<lucene.version>${lucene_version}<\/lucene.version>/" ./pom.xml
     fi
 
     if [ $java_version ]
     then
-        echo "New Java version is ${java_version}"
         sed -r -i "s/java-version: \\'[0-9]+\\'/java-version: \\'${java_version}\\'/" ./.github/workflows/create-release.yml
         sed -r -i "s/java-version: \\'[0-9]+\\'/java-version: \\'${java_version}\\'/" ./.github/workflows/run-tests.yml
     fi
