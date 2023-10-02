@@ -40,7 +40,7 @@ jobs:
       id: get_version
       run: |
         version=$(echo $${{ github.ref  }} | sed -r 's/v(.+)/\1/p')
-        echo "::set-output name=version::$version"
+        echo "version=${version}" >> $GITHUB_OUTPUT
     - name: Upload Release Asset
       id: upload_release_asset
       uses: actions/upload-release-asset@v1
