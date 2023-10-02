@@ -4,9 +4,9 @@ outputs:
   elasticsearch-versoin:
     description: 'The version of Elasticsearch to update to. Blank if no new version is yet available'
   lucene-version:
-    descripiton: 'If the new Elasticsearch version uses a new Lucene version, it will be here. Blank otherwise'
+    description: 'If the new Elasticsearch version uses a new Lucene version, it will be here. Blank otherwise'
   java-version:
-    descripiton: 'If the new Elasticsearch version uses a new Java version, it will be here. Blank otherwise'
+    description: 'If the new Elasticsearch version uses a new Java version, it will be here. Blank otherwise'
 runs:
   using: 'docker'
   image: 'Dockerfile'
