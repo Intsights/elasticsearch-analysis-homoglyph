@@ -58,8 +58,7 @@ then
 
     if [ $java_version ]
     then
-        sed -r -i "s/java-version: \\'[0-9]+\\'/java-version: \\'${java_version}\\'/" ./.github/workflows/create-release.yml
-        sed -r -i "s/java-version: \\'[0-9]+\\'/java-version: \\'${java_version}\\'/" ./.github/workflows/run-tests.yml
+        echo $java_version > ./es-java-version
     fi
 else
     echo "No new Elasticseach version was found"
