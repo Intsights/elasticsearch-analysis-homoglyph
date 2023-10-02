@@ -21,7 +21,11 @@ next_patch_version=${major}.${minor}.${next_patch}
 
 for version_to_try in $next_patch_version $next_minor_version $next_patch_version
 do
-    http_code=$(curl -I -o /dev/null -w "%{http_code}" ${maven_repo_url}${version_to_try}/)
+    version_url_in_repo="${maven_repo_url}${version_to_try}/"
+
+    echo "Checking ${version_url_in_repo} with HEAD request..."
+    http_code=$(curl -I -o /dev/null -w "%{http_code}" ${version_url_in_repo})
+
     if [ $http_code -eq 200 ]
     then
         elasticsearch_version=$version_to_try
@@ -31,9 +35,15 @@ done
 
 if [ $elasticsearch_version ]
 then
-    http=$(curl ${release_notes_url}release-notes-${elasticsearch_version}.html)
-    lucene_version=$(echo $http | sed -nr "s/.*upgrade[a-z ]*lucene[a-z ]*([0-9]+\.[0-9]+\.[0-9]+).*/\1/pI")
-    java_version=$(echo $http | sed -nr "s/.*upgrade[a-z ]*JDK[a-z ]*([0-9]+).*/\1/pI")
+    echo "New elasticsearch version: ${elasticsearch_version}"
+
+    release_notes_url="${release_notes_url}release-notes-${elasticsearch_version}.html"
+
+    echo "Getting release notes from ${release_notes_url}"
+    release_notes_http=$(curl ${release_notes_url})
+
+    lucene_version=$(echo $release_notes_http | sed -nr "s/.*upgrade[a-z ]*lucene[a-z ]*([0-9]+\.[0-9]+\.[0-9]+).*/\1/pI")
+    java_version=$(echo $release_notes_http | sed -nr "s/.*upgrade[a-z ]*JDK[a-z ]*([0-9]+).*/\1/pI")
 
     # Updrage Elasticsearch version
     sed -r -i "s/<elasticsearch\.version>[0-9]+\.[0-9]+\.[0-9]+<\/elasticsearch\.version>/<elasticsearch.version>${elasticsearch_version}<\/elasticsearch.version>/" ./pom.xml
@@ -41,14 +51,18 @@ then
 
     if [ $lucene_version ]
     then
+        echo "New Lucene version is ${lucene_version}"
         sed -r -i "s/<lucene\.version>[0-9]+\.[0-9]+\.[0-9]+<\/lucene\.version>/<lucene.version>${lucene_version}<\/lucene.version>/" ./pom.xml
     fi
 
     if [ $java_version ]
     then
+        echo "New Java version is ${java_version}"
         sed -r -i "s/java-version: \\'[0-9]+\\'/java-version: \\'${java_version}\\'/" ./.github/workflows/create-release.yml
         sed -r -i "s/java-version: \\'[0-9]+\\'/java-version: \\'${java_version}\\'/" ./.github/workflows/run-tests.yml
     fi
+else
+    echo "No new Elasticseach version was found"
 fi
 
 echo "elasticsearch-version=${elasticsearch_version}" >> ${GITHUB_OUTPUT}
