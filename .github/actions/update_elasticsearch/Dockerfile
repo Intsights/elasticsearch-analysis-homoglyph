@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine/curl:8.1.2
 
 COPY entrypoint.sh /entrypoint.sh
 
