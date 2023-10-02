@@ -1,0 +1,29 @@
+inputs:
+  elasticsearch-versin:
+    description: 'Elasticsearch version'
+  lucene-version:
+    description: 'Lucene version'
+  java-version:
+    description: 'Java version'
+outputs:
+  commit-message:
+    description: 'Commit message'
+    value: ${{ steps.commit_message.outputs.message }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Create Commit Message
+      id: commit_message
+      shell: bash
+      run: |
+        message="bump Elasticsearch version to ${{ inputs.elasticsearch-version }}"
+
+        if [ ${{ inputs.lucene-version }} && ${{ inputs.lucene-version }} ]; then
+          message="${message} (and lucene to ${{  }} and java to ${{  }})"
+        elif [ ${{ inputs.lucene-version }} ]; then
+          message="${message} (and lucene to ${{  }})"
+        elif [ ${{ inputs.java-version }} ]; then
+          message="${message} (and java to ${{  }})"
+        fi
+
+        echo "::set-output name=message::${message}"

@@ -1,0 +1,22 @@
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  create_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get version from branch name
+        id: get_version
+        if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'releases/') }}
+        run: |
+          version=$(echo $${{ github.event.pull_request.head.ref }} | sed -r 's/releases\/release-(v.+)/\1/p')
+          echo "::set-output name=version::$version"
+      - name: Create tag
+        if: steps.get_version.outputs.version
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ steps.get_version.outputs.version }}

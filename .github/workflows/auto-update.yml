@@ -1,0 +1,31 @@
+name: Auto Updater
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 17 * * *'
+
+jobs:
+  update-elasticsearch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: update
+        id: update_es
+        uses: ./.github/actions/update_elasticsearch
+      - name: Create commit message
+        id: commit_message
+        if: steps.update_es.outputs.elasticsearch-version
+        uses: ./.github/actions/create_commit_message
+        with:
+          elasticsearch-version: ${{ steps.update_es.outputs.elasticsearch-version }}
+          lucene-version: ${{ steps.update_es.outputs.lucene-version }}
+          java-version: ${{ steps.update_es.outputs.java-version }}
+      - name: Open PR
+        if: steps.update_es.outputs.elasticsearch-version
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: releases/release-v${{ steps.update_es.outputs.elasticsearch-version }}
+          commit-message: ${{ steps.commit_message.outputs.commit-message}}
+          title: Releases v${{ steps.update_es.outputs.elasticsearch-version }}
