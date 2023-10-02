@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd "{$GITHUB_WORKSPACE}"
+cd "${GITHUB_WORKSPACE}"
 
 maven_repo_url='https://repo.maven.apache.org/maven2/org/elasticsearch/elasticsearch/'
 release_notes_url='https://www.elastic.co/guide/en/elasticsearch/reference/current/'
