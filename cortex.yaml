@@ -1,0 +1,14 @@
+---
+info:
+  title: Elasticsearch Analysis Homoglyph
+  x-cortex-git:
+    github:
+      alias: intsightsorg
+      repository: Intsights/elasticsearch-analysis-homoglyph
+  x-cortex-tag: elasticsearch-analysis-homoglyph
+  x-cortex-type: service
+  x-cortex-domain-parents:
+  - tag: threatintel-rd
+openapi: 3.0.1
+servers:
+- url: "/"
