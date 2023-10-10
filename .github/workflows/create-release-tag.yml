@@ -1,0 +1,29 @@
+name: Create Tag
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  create_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.REPO_GHA_PAT }}
+      - name: Get tag name from branch name
+        id: get_tag_name
+        if: ${{ github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'releases/') }}
+        run: |
+          tag_name=$(echo ${{ github.event.pull_request.head.ref }} | sed -nr 's/^releases\/release-(v[0-9]{0,4}\.[0-9]{0,4}\.[0-9]{0,4}(\.[0-9]{0,4}){0,3})$/\1/p')
+          echo "tag_name=${tag_name}" >> $GITHUB_OUTPUT
+      - name: Create tag
+        if: steps.get_tag_name.outputs.tag_name
+        uses: rickstaa/action-create-tag@v1
+        with:
+          github_token: ${{ secrets.REPO_GHA_PAT }}
+          tag: ${{ steps.get_tag_name.outputs.tag_name }}
