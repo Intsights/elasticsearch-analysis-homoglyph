@@ -19,7 +19,7 @@ next_major_version=${next_major}.0.0
 next_minor_version=${major}.${next_minor}.0
 next_patch_version=${major}.${minor}.${next_patch}
 
-for version_to_try in $next_patch_version $next_minor_version $next_patch_version
+for version_to_try in $next_patch_version $next_minor_version $next_major_version
 do
     version_url_in_repo="${maven_repo_url}${version_to_try}/"
 
