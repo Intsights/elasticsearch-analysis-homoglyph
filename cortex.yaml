@@ -8,7 +8,10 @@ info:
   x-cortex-tag: elasticsearch-analysis-homoglyph
   x-cortex-type: service
   x-cortex-domain-parents:
-  - tag: threatintel
+  - tag: threatintel-phishing
+  x-cortex-groups:
+  - exposure:internal-ship
+  - target:not-deployed
 openapi: 3.0.1
 servers:
 - url: "/"
