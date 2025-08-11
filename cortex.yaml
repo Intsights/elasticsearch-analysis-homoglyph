@@ -10,7 +10,7 @@ info:
   x-cortex-domain-parents:
   - tag: threatintel-phishing
   x-cortex-groups:
-  - exposure:internal-ship
+  - exposure:opensource
   - target:not-deployed
 openapi: 3.0.1
 servers:
