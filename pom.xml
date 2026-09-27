@@ -6,11 +6,32 @@
 	<version>${elasticsearch.version}</version>
 	<packaging>jar</packaging>
 	<properties>
-	    <elasticsearch.version>8.18.8</elasticsearch.version>
+	    <elasticsearch.version>8.19.17</elasticsearch.version>
 		<lucene.version>9.12.1</lucene.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<!-- Override transitive lz4-java to fix CVE-2025-12183, CVE-2025-66566, CVE-2026-59949 -->
+			<dependency>
+				<groupId>org.lz4</groupId>
+				<artifactId>lz4-java</artifactId>
+				<version>1.11.1</version>
+			</dependency>
+			<!-- Override transitive log4j to fix CVE-2026-34479, CVE-2026-34480 -->
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>2.25.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>2.25.4</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.elasticsearch</groupId>
