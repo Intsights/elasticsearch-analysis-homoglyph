@@ -2,8 +2,6 @@ name: Auto Updater
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '30 17 * * *'
 
 jobs:
   update-elasticsearch:
