@@ -18,30 +18,33 @@ The token 'heｌｌo' will be replaced with the following tokens:
 * If the token can be translated to too many ascii tokens (more than 200), it will produce no translations at all, and will just be returned as is. This is to protect from out-of-memory problems.
 
 ### Elasticsearch version compatibility
-| Plugin version   | Elasticsearch version |
-|------------------|-----------------------|
-| 8.x              | 8.x                   |
-| 7.17.3           | 7.17.3                |
-| 0.2.3            | 7.10.0                |
-| 0.2.2            | 7.8.1                 |
-| 0.2.1            | 7.6.2                 |
-| 0.2.0            | 7.3.1                 |
-| 0.1.1            | 7.3.1                 |
-| 0.1.0            | 7.3.1                 |
+This is a [stable plugin](https://www.elastic.co/docs/extend/elasticsearch/creating-stable-plugins) since 8.19.0.
+
+| Plugin version   | Elasticsearch version                  |
+|------------------|----------------------------------------|
+| 8.19.0           | 8.19.0 and every later 8.x             |
+| 8.x (classic)    | exactly the same 8.x version           |
+| 7.17.3           | 7.17.3                                 |
+| 0.2.3            | 7.10.0                                 |
+| 0.2.2            | 7.8.1                                  |
+| 0.2.1            | 7.6.2                                  |
+| 0.2.0            | 7.3.1                                  |
+| 0.1.1            | 7.3.1                                  |
+| 0.1.0            | 7.3.1                                  |
 
 (version 8.8.0 is not available because of the absence of `elasticsearch-preallocate` 8.8.0, as seen [here](https://repo1.maven.org/maven2/org/elasticsearch/elasticsearch-preallocate/). I will add an 8.8.0 release if and when this problem is fixed)
 
 ## Installation
 To install the plugin on an Elasticsearch node make sure you are in the Elasticsearch directory and then run:
 ```
-bin/elasticsearch-plugin install https://github.com/intsights/elasticsearch-analysis-homoglyph/releases/download/v0.2.2/analysis-homoglyph-0.2.2.zip
+bin/elasticsearch-plugin install https://github.com/intsights/elasticsearch-analysis-homoglyph/releases/download/v8.19.0/analysis-homoglyph-8.19.0.zip
 ```
 
 You can verify the plugin has been installed by running:
 ```
 bin/elasticsearch-plugin list
 ```
-and making sure `analysis-plugin` is in the list of installed plugins.
+and making sure `analysis-homoglyph` is in the list of installed plugins.
 For the plugin to start working you need to restart the node.
 
 ### With Docker

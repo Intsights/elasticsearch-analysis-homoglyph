@@ -1,16 +1,12 @@
 package com.intsights.elasticsearch.index.analysis;
 
 import org.apache.lucene.analysis.TokenStream;
-import org.elasticsearch.index.analysis.AbstractTokenFilterFactory;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.env.Environment;
-import org.elasticsearch.index.IndexSettings;
+import org.elasticsearch.plugin.NamedComponent;
+import org.elasticsearch.plugin.analysis.TokenFilterFactory;
 
-public class HomoglyphTokenFilterFactory extends AbstractTokenFilterFactory {
-
-    public HomoglyphTokenFilterFactory(IndexSettings indexSettings, Environment environment, String name, Settings settings) {
-        super(name, settings);
-    }
+@NamedComponent(HomoglyphTokenFilterFactory.NAME)
+public class HomoglyphTokenFilterFactory implements TokenFilterFactory {
+    public static final String NAME = "homoglyph";
 
     @Override
     public TokenStream create(TokenStream tokenStream) {
