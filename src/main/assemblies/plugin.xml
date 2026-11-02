@@ -7,20 +7,22 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <files>
         <file>
-            <source>${project.basedir}/src/main/resources/plugin-descriptor.properties</source>
+            <source>${project.basedir}/src/main/plugin-metadata/stable-plugin-descriptor.properties</source>
             <outputDirectory>/</outputDirectory>
             <filtered>true</filtered>
+        </file>
+        <file>
+            <source>${project.basedir}/src/main/plugin-metadata/named_components.json</source>
+            <outputDirectory>/</outputDirectory>
         </file>
     </files>
     <dependencySets>
         <dependencySet>
             <outputDirectory>/</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
-            <useTransitiveFiltering>true</useTransitiveFiltering>
-            <excludes>
-                <exclude>org.elasticsearch:elasticsearch</exclude>
-            </excludes>
+            <includes>
+                <include>${project.groupId}:${project.artifactId}</include>
+            </includes>
         </dependencySet>
     </dependencySets>
 </assembly>
-

@@ -6,21 +6,48 @@
 	<version>${elasticsearch.version}</version>
 	<packaging>jar</packaging>
 	<properties>
-	    <elasticsearch.version>8.18.8</elasticsearch.version>
-		<lucene.version>9.12.1</lucene.version>
+	    <elasticsearch.version>8.19.0</elasticsearch.version>
+		<lucene.version>9.12.2</lucene.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.release>17</maven.compiler.release>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.elasticsearch</groupId>
-			<artifactId>elasticsearch</artifactId>
+			<groupId>org.elasticsearch.plugin</groupId>
+			<artifactId>elasticsearch-plugin-api</artifactId>
 			<version>${elasticsearch.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch.plugin</groupId>
+			<artifactId>elasticsearch-plugin-analysis-api</artifactId>
+			<version>${elasticsearch.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>${lucene.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analysis-common</artifactId>
+			<version>${lucene.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-test-framework</artifactId>
 			<version>${lucene.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch-plugin-scanner</artifactId>
+			<version>${elasticsearch.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -48,4 +75,3 @@
 	    </plugins>
 	</build>
 </project>
-
